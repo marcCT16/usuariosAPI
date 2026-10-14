@@ -1,4 +1,4 @@
-package com.example.practica_api_rest.entity;
+package com.example.practica_api_rest.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

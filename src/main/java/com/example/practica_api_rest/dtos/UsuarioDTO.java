@@ -1,4 +1,4 @@
-package com.example.practica_api_rest.dto;
+package com.example.practica_api_rest.dtos;
 
 import lombok.Data;
 

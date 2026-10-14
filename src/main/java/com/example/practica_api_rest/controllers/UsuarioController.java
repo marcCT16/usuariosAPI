@@ -1,4 +1,4 @@
-package com.example.practica_api_rest.controller;
+package com.example.practica_api_rest.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.practica_api_rest.dto.UsuarioDTO;
-import com.example.practica_api_rest.service.UsuarioService;
+import com.example.practica_api_rest.dtos.UsuarioDTO;
+import com.example.practica_api_rest.services.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
