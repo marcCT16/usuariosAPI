@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.practica_api_rest.dtos.UsuarioDTO;
 import com.example.practica_api_rest.models.entities.Usuario;
+import com.example.practica_api_rest.repositories.FacturaRepository;
 import com.example.practica_api_rest.repositories.UsuarioRepository;
 
 @Service
@@ -17,9 +18,11 @@ public class UsuarioService {
 	private static final int LIMITE_LONGITUD = 11;
 
 	private final UsuarioRepository repository;
+	private final FacturaRepository facturaRepository;
 
-	public UsuarioService(UsuarioRepository repository) {
+	public UsuarioService(UsuarioRepository repository, FacturaRepository facturaRepository) {
 		this.repository = repository;
+		this.facturaRepository = facturaRepository;
 	}
 
 	public List<UsuarioDTO> listar() {
@@ -56,6 +59,9 @@ public class UsuarioService {
 	public void eliminar(String clave) {
 		if (!repository.existsById(clave)) {
 			throw new NoEncontradaException(clave);
+		}
+		if (facturaRepository.existsByUsuario_Clave(clave)) {
+			throw new TieneFacturasException(clave);
 		}
 		repository.deleteById(clave);
 	}
@@ -115,6 +121,13 @@ public class UsuarioService {
 	public static class InvalidaException extends RuntimeException {
 		public InvalidaException(String mensaje) {
 			super(mensaje);
+		}
+	}
+
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public static class TieneFacturasException extends RuntimeException {
+		public TieneFacturasException(String clave) {
+			super("No se puede eliminar el usuario con clave '" + clave + "' porque tiene facturas");
 		}
 	}
 
